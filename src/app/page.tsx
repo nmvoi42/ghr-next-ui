@@ -1,8 +1,7 @@
-import styles from "./page.module.css";
+import Profile from '../components/Profile';
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-    </div>
-  );
+return (
+  <Profile/>
+ );
 }
