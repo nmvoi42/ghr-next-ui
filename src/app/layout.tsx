@@ -1,10 +1,11 @@
-import * as React from 'react';
+import { ReactNode } from 'react';
+
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import theme from '@/theme';
 import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 
+import theme from '@/theme';
 import type { Metadata } from "next";
 
 import "./globals.css";
@@ -14,6 +15,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
+
 export const metadata: Metadata = {
   title: "In Development",
   description: "",
@@ -22,7 +24,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>

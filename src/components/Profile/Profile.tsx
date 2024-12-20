@@ -1,6 +1,6 @@
 'use client'
 
-import * as React from 'react';
+import React from 'react';
 
 import {
     AppBar,
@@ -18,7 +18,12 @@ import {
 
 //import { Timeline } from '@mui/lab';
 
-const Profile = () => {
+import { useReactiveVar } from '@apollo/client';
+import { userInfo } from '@/state/cache';
+
+const Profile : React.FC = () => {
+    // Temporarily as a reactive var
+    const userProfileInfo = useReactiveVar(userInfo);
 
     return (
         <Container disableGutters={true} maxWidth={false} >
@@ -44,7 +49,7 @@ const Profile = () => {
                                 sx={(theme)=>({
                                     width: '100%',
                                     })} >
-                                Placeholder text
+                                { userProfileInfo.name }
                             </Typography>
                         </Grid>
                     </Toolbar>
@@ -58,7 +63,7 @@ const Profile = () => {
             }} >
                 <Stack spacing={'0.75rem'} >
                     <Card>
-                        <CardHeader title={"Placeholder"} >
+                        <CardHeader title={ userProfileInfo.tagline } >
                         </CardHeader>
                         <CardContent>
                             <Typography gutterBottom variant="h6" component="div">
