@@ -16,14 +16,29 @@ import {
     Typography,
 } from '@mui/material';
 
+import {
+} from '@carbon/charts';
+
 //import { Timeline } from '@mui/lab';
 
 import { useReactiveVar } from '@apollo/client';
 import { userInfo } from '@/state/cache';
 
+import { WordCloudChart } from '@carbon/charts-react'
+
+import '@carbon/charts-react/styles.css';
+
 const Profile : React.FC = () => {
     // Temporarily as a reactive var
     const userProfileInfo = useReactiveVar(userInfo);
+
+    const wordCloudData = userProfileInfo.skills.map( (skill) => (
+        {
+            word: skill.skill,
+            value: skill.level,
+            group: skill.type
+        }
+    ));
 
     return (
         <Container disableGutters={true} maxWidth={false} >
@@ -46,7 +61,7 @@ const Profile : React.FC = () => {
                     }} >
                         <Grid>
                             <Typography variant="h4" component="div" 
-                                sx={(theme)=>({
+                                sx={()=>({
                                     width: '100%',
                                     })} >
                                 { userProfileInfo.name }
@@ -66,6 +81,27 @@ const Profile : React.FC = () => {
                         <CardHeader title={ userProfileInfo.tagline } >
                         </CardHeader>
                         <CardContent>
+                            <Container disableGutters={true} maxWidth={'lg'} >
+                                <WordCloudChart
+                                    data={ wordCloudData }
+                                    options={{
+                                        title: 'Skills',
+                                        resizable: true,
+                                        color: {
+                                            pairing: {
+                                                option: 3
+                                            },
+                                        },
+                                        tooltip: {
+                                            wordLabel: 'Skill',
+                                            valueLabel: 'Level',
+                                        },
+                                        height: '400px',
+                                        theme: 'g100',
+                                    }}
+                                >
+                                </WordCloudChart>
+                            </Container>
                             <Typography gutterBottom variant="h6" component="div">
                                 Placeholder content
                             </Typography>

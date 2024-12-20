@@ -1,15 +1,18 @@
 {
   "name": "ghr-next-ui",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "scripts": {
-    "dev": "NODE_OPTIONS='--inspect' next dev --turbopack -H localhost",
+    "15dev": "NODE_OPTIONS='--inspect' next dev --turbopack -H localhost",
+    "dev": "NODE_OPTIONS='--inspect' next dev -H localhost",
     "build": "next build",
     "start": "next start -H localhost",
     "lint": "next lint"
   },
   "dependencies": {
     "@apollo/client":"3.12.4",
+    "@carbon/charts-react":"1.22.8",
     "@emotion/cache":"11.14.0",
     "@emotion/react":"11.14.0",
     "@emotion/styled":"11.14.0",
@@ -19,9 +22,9 @@
     "@mui/lab":"6.0.0-beta.20",
     "@mui/material":"6.2.1",
     "@mui/material-nextjs":"6.2.1",
-    "next": "15.1.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "next": "14.2.14",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
   },
   "devDependencies": {
     "typescript": "^5",
@@ -31,5 +34,15 @@
     "eslint": "^9",
     "eslint-config-next": "15.1.0",
     "@eslint/eslintrc": "^3"
+  },
+  "overrides": {
+    "next": "14.2.14",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "resolutions": {
+    "next": "14.2.14",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   }
 }
