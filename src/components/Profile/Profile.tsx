@@ -36,7 +36,7 @@ const Profile : React.FC = () => {
         {
             word: skill.skill,
             value: skill.level,
-            group: skill.type
+            group: skill.side
         }
     ));
 
