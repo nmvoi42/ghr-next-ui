@@ -1,9 +1,11 @@
+'use client'
 
 import {
     Container,
 } from '@mui/material';
 import { WordCloudChart } from '@carbon/charts-react'
 
+import type { Skill } from '@/types/ProfileTypes';
 
 type SkillsWordCloudProps = {
     skills: Array< Skill >,

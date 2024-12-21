@@ -1,12 +1,12 @@
 
-type Skill = {
+export type Skill = {
     skill: string;
     level: number;
     type: 'Language'|'Framework';
     side: 'Frontend'|'Backend';
 };
 
-type Experience = {
+export type Experience = {
     title: string;
     company: string;
     start: string;
@@ -14,7 +14,7 @@ type Experience = {
     description?: string;
 };
 
-type UserInfo = {
+export type UserInfo = {
     userkey: string;
     name: string;
     tagline: string;

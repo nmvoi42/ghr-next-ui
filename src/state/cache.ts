@@ -3,6 +3,8 @@ import {
     makeVar
 } from '@apollo/client';
 
+import type { UserInfo } from '@/types/ProfileTypes';
+
 const userInfoDefaults : UserInfo = {
     userkey: 'john-doe',
     name: "John Doe",
