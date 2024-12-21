@@ -8,13 +8,15 @@ import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 import theme from '@/theme';
 import type { Metadata } from "next";
 
-import "./globals.css";
-
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
+// This will override some of the above, but I like some of these styles better
+import '@carbon/charts-react/styles.css';
+
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "In Development",

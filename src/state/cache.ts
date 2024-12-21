@@ -3,7 +3,7 @@ import {
     makeVar
 } from '@apollo/client';
 
-export const userInfo = makeVar({
+const userInfoDefaults : UserInfo = {
     userkey: 'john-doe',
     name: "John Doe",
     tagline: "Fullstack Developer",
@@ -40,6 +40,8 @@ export const userInfo = makeVar({
             end: "2020",
         },
     ],
-});
+};
+
+export const userInfo = makeVar( userInfoDefaults );
 
 export const cache = new InMemoryCache();
