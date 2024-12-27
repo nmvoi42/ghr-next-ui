@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@apollo/client": "3.12.4",
+    "@apollo/server": "4.11.2",
+    "@as-integrations/next": "3.2.0",
     "@carbon/charts-react": "1.22.8",
     "@emotion/cache": "11.14.0",
     "@emotion/react": "11.14.0",
