@@ -11,6 +11,11 @@ type SkillsWordCloudProps = {
     skills: Array< Skill >,
 };
 
+/**
+ * A component to display the provided skills list as a word cloud chart.
+ *
+ * @param {Array<Skill>} skills - The list of skill information for display.
+ */
 const SkillsWordCloud : React.FC<SkillsWordCloudProps> = ({
     skills,
 }) => {

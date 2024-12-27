@@ -9,6 +9,12 @@ type ApolloClientContainerProps = {
     children: ReactNode,
 } 
 
+/**
+ * Container to bring in the Apollo Provider and mark the client
+ * boundary within NextJS.
+ *
+ * @param {children} children - The children components in the container.
+ */
 const ApolloClientContainer : React.FC<ApolloClientContainerProps> = ( { children } ) => {
     return (
         <ApolloProvider client={apolloClient} >

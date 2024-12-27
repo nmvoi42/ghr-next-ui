@@ -3,103 +3,106 @@
 import React from 'react';
 
 import {
-    AppBar,
-    Button,
     Card,
     CardContent,
-    CardHeader,
     Container,
-    Divider,
-    Grid2 as Grid,
+    Link,
     Stack,
-    Toolbar,
     Typography,
 } from '@mui/material';
-
-import {
-} from '@carbon/charts';
 
 //import { Timeline } from '@mui/lab';
 
 import { useReactiveVar } from '@apollo/client';
+
 import { userInfo } from '@/state/cache';
+import ProfileAppBar from '@/components/ProfileAppBar';
+import ProfileContent from '@/components/ProfileContent';
 
-import SkillsWordCloud from '../SkillsWordCloud';
+type ProfileProps = {
+    hint?: string;
+    userkey?: string;
+};
 
-const Profile : React.FC = () => {
+/**
+ * Simple footer component for the Profile.
+ */
+const ProfileFooter : React.FC = () => {
+    return (
+        <Card>
+            <CardContent>
+            </CardContent>
+        </Card>
+    );
+};
+
+/**
+ * Component to retrieve data to populate the Profile and lay out the
+ * parts of the profile.
+ *
+ * @param {string} hint - Suggested alternative in case of lookup failure.
+ * @param {string} userkey - The key to reference the profile for lookup.
+ */
+const Profile : React.FC<ProfileProps> = ({
+    hint = null,
+    userkey = null,
+}) => {
     // Temporarily as a reactive var
     const userProfileInfo = useReactiveVar(userInfo);
 
+    console.debug(userkey);
+
+    let appBarTitle = '';
+    let profileContent = null;
+
+    // This would be queried and based on query return using
+    // userkey to reference the data.  Use this temporarily
+    // in place of the data retrieval.
+    if ( userkey ) {
+        appBarTitle = userProfileInfo.name;
+
+        // The user was retrieved, we can display the
+        // profile information.
+        profileContent = (
+            <ProfileContent
+                tagline={userProfileInfo.tagline}
+                skills={userProfileInfo.skills}
+            />
+        );
+    } else {
+        // Empty State for profile content if the profile can
+        // not be looked up.
+        // Should provide a status and suggestion to resolve.
+        profileContent = (
+            <CardContent>
+                <Typography variant="body1" >
+                    { "Sorry, we don't recognize what you are looking for." }
+                </Typography>
+                { (hint)?(
+                    <>
+                        { "Hint: " }
+                        <Link href={'/'+hint} underline="always" color="primary" sx={{ textTransform: "capitalize" }} >
+                            { "Try "+hint }
+                        </Link>
+                    </>
+                ):'' }
+            </CardContent>
+        );
+    }
+
     return (
         <Container disableGutters={true} maxWidth={false} >
-            <AppBar position="sticky" >
-                <Container id={"toolbar_container"} disableGutters={true} maxWidth={false} sx={(theme) => ({
-                    [theme.breakpoints.down('xl')]: {
-                        paddingLeft: '0',
-                    },
-                    [theme.breakpoints.up('xl')]: {
-                        paddingLeft: '1rem',
-                    },
-                    [theme.breakpoints.up(1700)]: {
-                        paddingLeft: '3rem',
-                    },
-                    [theme.breakpoints.up(1800)]: {
-                        paddingLeft: '5rem',
-                    },
-                })} >
-                    <Toolbar disableGutters={false} sx={{
-                    }} >
-                        <Grid>
-                            <Typography variant="h4" component="div" 
-                                sx={()=>({
-                                    width: '100%',
-                                    })} >
-                                { userProfileInfo.name }
-                            </Typography>
-                        </Grid>
-                    </Toolbar>
-                </Container>
-            </AppBar>
-
+            <ProfileAppBar title={appBarTitle} />
 
             <Container maxWidth={'xl'} sx={{
                 paddingTop: '1.25rem',
-
             }} >
                 <Stack spacing={'0.75rem'} >
                     <Card>
-                        <CardHeader title={ userProfileInfo.tagline } >
-                        </CardHeader>
-                        <CardContent>
-                            <SkillsWordCloud skills={userProfileInfo.skills} />
-                            <Typography gutterBottom variant="h6" component="div">
-                                Placeholder content
-                            </Typography>
-                            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} >
-                                {Array.from(Array(6)).map((_, index) => (
-                                    <Grid key={index} size={{ xs: 2, sm: 4, md: 4 }}>
-                                    <Button>{index + 1}</Button>
-                                    </Grid>
-                                ))}
-                            </Grid>
-                            <Divider sx={{
-                                marginTop: '1.5rem',
-                            }}
-                            />
-                            <Typography gutterBottom variant="body1" component="div" sx={{
-                                marginTop: '1rem',
-                            }} >
-                                { "This is some placeholder content" }
-                            </Typography>
-                        </CardContent>
+                        {profileContent}
                     </Card>
-                    <Card>
-                        <CardContent>
-                            <Typography gutterBottom variant="body1" component="div">
-                                { "This is some placeholder content" }
-                            </Typography>
-                        </CardContent>
-                    </Card>
+
+                    <ProfileFooter/>
                 </Stack>
             </Container>
         </Container>
