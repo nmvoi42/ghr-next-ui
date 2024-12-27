@@ -8,6 +8,7 @@ import SkillsWordCloud from '@/components/SkillsWordCloud';
 import type { Skill } from '@/types/ProfileTypes';
 
 type ProfileContentProps = {
+    name: string;
     tagline: string;
     skills: Array<Skill>;
 };
@@ -19,13 +20,23 @@ type ProfileContentProps = {
  * @param {Array<Skill>} skills - The list of skills
  */
 const ProfileContent : React.FC<ProfileContentProps> = ({
+    name = '',
     tagline = '',
     skills = [],
 }) => {
 
+    let title = '';
+    if ( name && tagline ) {
+        title = name + ' — ' + tagline;
+    } else if ( name ) {
+        title = name;
+    } else if ( tagline ) {
+        title = tagline;
+    }
+
     return (
         <>
-            <CardHeader title={ tagline } />
+            <CardHeader title={ title } />
             <CardContent>
                 <SkillsWordCloud skills={skills} />
             </CardContent>

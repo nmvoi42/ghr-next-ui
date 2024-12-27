@@ -65,6 +65,7 @@ const Profile : React.FC<ProfileProps> = ({
         // profile information.
         profileContent = (
             <ProfileContent
+                name={userProfileInfo.name}
                 tagline={userProfileInfo.tagline}
                 skills={userProfileInfo.skills}
             />
