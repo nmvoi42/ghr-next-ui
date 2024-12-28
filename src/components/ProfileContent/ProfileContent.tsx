@@ -3,14 +3,17 @@ import {
     CardHeader,
 } from '@mui/material';
 
+import EmptyState from '@/components/EmptyState';
 import SkillsWordCloud from '@/components/SkillsWordCloud';
 
 import type { Skill } from '@/types/ProfileTypes';
 
 type ProfileContentProps = {
-    name: string;
-    tagline: string;
-    skills: Array<Skill>;
+    error?: boolean;
+    loading?: boolean;
+    name?: string;
+    tagline?: string;
+    skills?: Array<Skill>;
 };
 
 /**
@@ -20,6 +23,8 @@ type ProfileContentProps = {
  * @param {Array<Skill>} skills - The list of skills
  */
 const ProfileContent : React.FC<ProfileContentProps> = ({
+    error = false,
+    loading = false,
     name = '',
     tagline = '',
     skills = [],
@@ -34,11 +39,29 @@ const ProfileContent : React.FC<ProfileContentProps> = ({
         title = tagline;
     }
 
+    let profileContent = null;
+
+    if ( !loading && ( error || !title && !skills ) ) {
+        title = '';
+        profileContent = (
+            <EmptyState
+                error
+                message="Unable to display data."
+                />
+        );
+    } else {
+        profileContent = (
+            <SkillsWordCloud
+                loading={loading}
+                skills={skills} />
+        )
+    }
+
     return (
         <>
             <CardHeader title={ title } />
             <CardContent>
-                <SkillsWordCloud skills={skills} />
+                { profileContent }
             </CardContent>
         </>
     );

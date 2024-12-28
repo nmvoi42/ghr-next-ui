@@ -8,16 +8,15 @@ import {
     Container,
     Link,
     Stack,
-    Typography,
 } from '@mui/material';
 
 //import { Timeline } from '@mui/lab';
 
-import { useReactiveVar } from '@apollo/client';
+import { gql, useLazyQuery } from '@apollo/client';
 
-import { userInfo } from '@/state/cache';
 import ProfileAppBar from '@/components/ProfileAppBar';
 import ProfileContent from '@/components/ProfileContent';
+import EmptyState from '../EmptyState';
 
 type ProfileProps = {
     hint?: string;
@@ -36,6 +35,22 @@ const ProfileFooter : React.FC = () => {
     );
 };
 
+const GET_PROFILE_QUERY = gql`
+        query getProfile {
+            profile {
+                userkey
+                name
+                tagline
+                skills {
+                    skill level type side
+                }
+                experience {
+                    title company start end description
+                }
+            }
+        }
+`;
+
 /**
  * Component to retrieve data to populate the Profile and lay out the
  * parts of the profile.
@@ -47,27 +62,34 @@ const Profile : React.FC<ProfileProps> = ({
     hint = null,
     userkey = null,
 }) => {
-    // Temporarily as a reactive var
-    const userProfileInfo = useReactiveVar(userInfo);
 
-    console.debug(userkey);
+    const [ doProfileQuery, profileQueryInfo ] = useLazyQuery(GET_PROFILE_QUERY);
 
     let appBarTitle = '';
     let profileContent = null;
 
-    // This would be queried and based on query return using
-    // userkey to reference the data.  Use this temporarily
-    // in place of the data retrieval.
+    // If we were passed a userkey, use that to query the
+    // profile data.
     if ( userkey ) {
-        appBarTitle = userProfileInfo.name;
+        if ( !profileQueryInfo.called ) {
+            doProfileQuery({
+                variables: { userkey: userkey },
+            })
+            .catch( (err) => {
+                console.error("Failure during profile query", err);
+            });
+        } else {
+            appBarTitle = profileQueryInfo.data?.profile?.name;
+        }
 
-        // The user was retrieved, we can display the
-        // profile information.
+        // The user was fetched (or is loading), display the related information
         profileContent = (
             <ProfileContent
-                name={userProfileInfo.name}
-                tagline={userProfileInfo.tagline}
-                skills={userProfileInfo.skills}
+                loading={profileQueryInfo.loading || !profileQueryInfo.called}
+                error={!!profileQueryInfo.error}
+                name={profileQueryInfo.data?.profile?.name}
+                tagline={profileQueryInfo.data?.profile?.tagline}
+                skills={profileQueryInfo.data?.profile?.skills}
             />
         );
     } else {
@@ -76,9 +98,9 @@ const Profile : React.FC<ProfileProps> = ({
         // Should provide a status and suggestion to resolve.
         profileContent = (
             <CardContent>
-                <Typography variant="body1" >
-                    { "Sorry, we don't recognize what you are looking for." }
-                </Typography>
+                <EmptyState
+                    error
+                    message="Sorry, we don't recognize what you are looking for." />
                 { (hint)?(
                     <>
                         { "Hint: " }
