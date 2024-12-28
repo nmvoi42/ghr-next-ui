@@ -61,7 +61,7 @@ const SkillsWordCloud : React.FC<SkillsWordCloudProps> = ({
         // place of the chart.
         return (
             <Container disableGutters={true} maxWidth={'lg'} >
-                <Skeleton variant="rounded" />
+                <Skeleton variant="rounded" height={400} />
             </Container>
         );
     }

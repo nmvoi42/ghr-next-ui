@@ -19,8 +19,22 @@ import '@carbon/charts-react/styles.css';
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "In Development",
-  description: "",
+  title: "DGH - React Demo - Profile",
+  description: "Demo React and NextJS page",
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    nosnippet: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      nocache: true,
+      nosnippet: true,
+      noimageindex: true,
+      "max-image-preview": "none",
+    },
+  },
 };
 
 export default function RootLayout({

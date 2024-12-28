@@ -1,10 +1,12 @@
 import {
     AppBar,
     Container,
-    Grid2 as Grid,
+    Stack,
     Toolbar,
     Typography,
 } from '@mui/material';
+
+import { ArrowForwardIosRounded } from '@mui/icons-material';
 
 type ProfileAppBarProps = {
     title: string;
@@ -36,11 +38,12 @@ const ProfileAppBar: React.FC<ProfileAppBarProps> = ({
             })} >
                 <Toolbar disableGutters={false} sx={{
                 }} >
-                    <Grid>
+                    <Stack direction="row" sx={{ display: "flex", alignItems: "center" }} >
+                        <ArrowForwardIosRounded fontSize="large" />
                         <Typography variant="h4" component="div" sx={{ textTransform: "capitalize" }} >
                             { title }
                         </Typography>
-                    </Grid>
+                    </Stack>
                 </Toolbar>
             </Container>
         </AppBar>
