@@ -4,8 +4,8 @@
   "type": "commonjs",
   "private": true,
   "scripts": {
-    "devturbo15": "NODE_OPTIONS='--inspect' next dev --turbopack -H localhost",
-    "dev": "NODE_OPTIONS='--inspect' next dev -H localhost",
+    "devturbo15": "next dev --turbopack -H localhost",
+    "dev": "next dev -H localhost",
     "build": "next build",
     "start": "next start -H localhost",
     "lint": "next lint",
