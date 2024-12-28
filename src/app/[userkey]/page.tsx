@@ -1,6 +1,12 @@
+import {
+} from '@mui/material';
+
 import Profile from '@/components/Profile';
 import ApolloClientContainer from '@/components/ApolloClientContainer';
 
+/**
+ * A page to display the profile information for an individual.
+ */
 export default async function ProfilePage({
     params,
 } : {
@@ -13,17 +19,15 @@ export default async function ProfilePage({
     // any invalid requests ahead of time.
     const validUserKeys = process.env.VALID_USER_TAGS?.split(',') ?? [];
 
-    if ( validUserKeys.includes( userkey.toLowerCase() ) ) {
-        return (
-            <ApolloClientContainer>
-                <Profile userkey={userkey.toLowerCase()} />
-            </ApolloClientContainer>
-        );
-    } else {
-        return (
-            <ApolloClientContainer>
-                <Profile hint={validUserKeys?.[0]} />
-            </ApolloClientContainer>
-        );
-    }
+    return (
+        <ApolloClientContainer>
+            {
+                ( validUserKeys.includes( userkey.toLowerCase() ) ) ? (
+                    <Profile userkey={userkey.toLowerCase()} />
+                ) : (
+                    <Profile hint={validUserKeys?.[0]} />
+                )
+            }
+        </ApolloClientContainer>
+    );
 }

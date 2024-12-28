@@ -8,6 +8,7 @@ import {
     Container,
     Link,
     Stack,
+    Typography,
 } from '@mui/material';
 
 //import { Timeline } from '@mui/lab';
@@ -30,6 +31,9 @@ const ProfileFooter : React.FC = () => {
     return (
         <Card>
             <CardContent>
+                <Typography variant="body2">
+                    This simple demo site was constructed using Javascript/Typescript, NextJS, GraphQL, MaterialUI, Carbon Charts.
+                </Typography>
             </CardContent>
         </Card>
     );
