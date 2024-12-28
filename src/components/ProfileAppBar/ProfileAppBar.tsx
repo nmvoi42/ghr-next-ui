@@ -6,7 +6,6 @@ import {
     Typography,
 } from '@mui/material';
 
-
 type ProfileAppBarProps = {
     title: string;
 };
@@ -14,7 +13,7 @@ type ProfileAppBarProps = {
 /**
  * Standardized AppBar component for Profile pages.
  * 
- * @param {title} string - Large text to display as the title on the AppBar.
+ * @param {string} title - Large text to display as the title on the AppBar.
  */
 const ProfileAppBar: React.FC<ProfileAppBarProps> = ({
     title = "",
@@ -38,10 +37,7 @@ const ProfileAppBar: React.FC<ProfileAppBarProps> = ({
                 <Toolbar disableGutters={false} sx={{
                 }} >
                     <Grid>
-                        <Typography variant="h4" component="div" 
-                            sx={()=>({
-                                width: '100%',
-                                })} >
+                        <Typography variant="h4" component="div" sx={{ textTransform: "capitalize" }} >
                             { title }
                         </Typography>
                     </Grid>

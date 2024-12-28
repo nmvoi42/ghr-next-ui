@@ -59,7 +59,7 @@ const ProfileContent : React.FC<ProfileContentProps> = ({
 
     return (
         <>
-            <CardHeader title={ title } />
+            <CardHeader title={ title } sx={{ textTransform: "capitalize" }} />
             <CardContent>
                 { profileContent }
             </CardContent>

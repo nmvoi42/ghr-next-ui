@@ -72,22 +72,29 @@ const Profile : React.FC<ProfileProps> = ({
     // profile data.
     if ( userkey ) {
         if ( !profileQueryInfo.called ) {
+            // Query the data to populate the profile
             doProfileQuery({
                 variables: { userkey: userkey },
             })
             .catch( (err) => {
                 console.error("Failure during profile query", err);
             });
-        } else {
-            appBarTitle = profileQueryInfo.data?.profile?.name;
         }
+
+        // If this was not populated based on the data lookup, use the modified userkey
+        // as the name.
+        let profileName = profileQueryInfo.data?.profile?.name;
+        if ( !profileName || userkey.toLowerCase() != profileQueryInfo.data?.profile?.userkey ) {
+            profileName = userkey.replaceAll('-',' ');
+        }
+        appBarTitle = profileName;
 
         // The user was fetched (or is loading), display the related information
         profileContent = (
             <ProfileContent
                 loading={profileQueryInfo.loading || !profileQueryInfo.called}
                 error={!!profileQueryInfo.error}
-                name={profileQueryInfo.data?.profile?.name}
+                name={profileName}
                 tagline={profileQueryInfo.data?.profile?.tagline}
                 skills={profileQueryInfo.data?.profile?.skills}
             />
@@ -115,7 +122,7 @@ const Profile : React.FC<ProfileProps> = ({
 
     return (
         <Container disableGutters={true} maxWidth={false} >
-            <ProfileAppBar title={appBarTitle} />
+            <ProfileAppBar title={appBarTitle}  />
 
             <Container maxWidth={'xl'} sx={{
                 paddingTop: '1.25rem',
