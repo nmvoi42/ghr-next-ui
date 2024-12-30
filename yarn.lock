@@ -1201,6 +1201,11 @@
   dependencies:
     "@ibm/telemetry-js" "^1.5.1"
 
+"@edge-csrf/nextjs@2.5.2":
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/@edge-csrf/nextjs/-/nextjs-2.5.2.tgz#85fbe094925fa13fd9b81932e096b60e1a6f9e0f"
+  integrity sha512-/LiV9jNp5WShOPG1B+Y4PJa5yCJSPCu/LjZ43Kqc+sNsPDaOSSMWF2GUI2JumII89+PEzzyF3V3aJzt8w6+CwQ==
+
 "@emotion/babel-plugin@^11.13.5":
   version "11.13.5"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.13.5.tgz#eab8d65dbded74e0ecfd28dc218e75607c4e7bc0"

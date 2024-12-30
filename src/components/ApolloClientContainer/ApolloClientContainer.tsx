@@ -3,10 +3,11 @@
 import React, {ReactNode} from 'react';
 
 import { ApolloProvider } from '@apollo/client';
-import { default as apolloClient } from '@/state/apollo-client';
+import { default as getApolloClient } from '@/state/apollo-client';
 
 type ApolloClientContainerProps = {
     children: ReactNode,
+    csrfToken: string,
 } 
 
 /**
@@ -15,7 +16,12 @@ type ApolloClientContainerProps = {
  *
  * @param {children} children - The children components in the container.
  */
-const ApolloClientContainer : React.FC<ApolloClientContainerProps> = ( { children } ) => {
+const ApolloClientContainer : React.FC<ApolloClientContainerProps> = ( {
+    csrfToken,
+    children,
+} ) => {
+    const apolloClient = getApolloClient(csrfToken);
+
     return (
         <ApolloProvider client={apolloClient} >
             {children}

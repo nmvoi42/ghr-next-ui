@@ -1,37 +1,50 @@
-import { ApolloClient, HttpLink, from } from '@apollo/client';
-import { cache } from './cache';
+import { ApolloClient, ApolloLink, HttpLink, from } from '@apollo/client';
+
+import type { NormalizedCacheObject } from '@apollo/client';
+
+import { cache, csrfApolloClientMap } from './cache';
 
 const httpLink = new HttpLink({
     uri: '/api/graphql',
 });
 
-/*
-const csrfLink = new ApolloLink((operation, forward) => {
-    // add the csrf token to the headers
-    operation.setContext(({ headers = {} }) => {
-        let extraHeaders = {};
-        let extraFetchOptions = {};
-        return ({
-            headers: {
-                ...headers,
-                'X-CSRFToken': document.getElementById("csrf-token")?.getAttribute("content") || null,
-                ...extraHeaders
-            },
-            fetchOptions: {
-                ...extraFetchOptions
-            }
-        });
-    } );
-    return forward(operation);
-});
-*/
+const makeCsrfLink = (csrfToken: string) => {
+    return new ApolloLink((operation, forward) => {
+        // add the csrf token to the headers
+        operation.setContext(({ headers = {} }) => {
+            const extraHeaders = {};
+            const extraFetchOptions = {};
+            return ({
+                headers: {
+                    ...headers,
+                    'X-CSRF-Token': csrfToken ?? 'invalid',
+                    ...extraHeaders
+                },
+                fetchOptions: {
+                    ...extraFetchOptions
+                }
+            });
+        } );
+        return forward(operation);
+    });
+};
 
-const client = new ApolloClient({
-    link: from([
-        //csrfLink,
-        httpLink
-    ]),
-    cache: cache
-});
+const getApolloClient = (csrfToken: string): ApolloClient<NormalizedCacheObject> => {
+    if ( csrfToken in csrfApolloClientMap() ) {
+        return csrfApolloClientMap()[csrfToken];
+    }
 
-export default client;
+    // This will not trigger an update, which is desired.
+    csrfApolloClientMap()[csrfToken] = new ApolloClient({
+        link: from([
+            makeCsrfLink(csrfToken),
+            httpLink
+        ]),
+        cache: cache
+    });
+
+    return csrfApolloClientMap()[csrfToken];
+};
+
+
+export default getApolloClient;

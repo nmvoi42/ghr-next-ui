@@ -1,5 +1,5 @@
-import {
-} from '@mui/material';
+
+import { headers } from 'next/headers';
 
 import Profile from '@/components/Profile';
 import ApolloClientContainer from '@/components/ApolloClientContainer';
@@ -19,8 +19,10 @@ export default async function ProfilePage({
     // any invalid requests ahead of time.
     const validUserKeys = process.env.VALID_USER_TAGS?.split(',') ?? [];
 
+    const csrfToken = headers().get('X-CSRF-Token') ?? 'invalid';
+
     return (
-        <ApolloClientContainer>
+        <ApolloClientContainer csrfToken={csrfToken} >
             {
                 ( validUserKeys.includes( userkey.toLowerCase() ) ) ? (
                     <Profile userkey={userkey.toLowerCase()} />
