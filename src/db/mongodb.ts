@@ -8,6 +8,9 @@ export const client = new MongoClient(
           version: ServerApiVersion.v1,
           strict: true,
           deprecationErrors: false,
-        }
+        },
+        connectTimeoutMS: 5000,
+        serverSelectionTimeoutMS: 5000,
+        socketTimeoutMS: 5000,
     }
 );

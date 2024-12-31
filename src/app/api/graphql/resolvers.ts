@@ -38,26 +38,12 @@ const profileResolver = async (parent: undefined, args: Record<string,ProfileRes
 
     let profile = null;
     try {
-        console.time();
-        console.log("Before connect",process.env.NODE_ENV);
-        console.timeLog();
         await mongodbClient.connect();
-        console.log("After connect");
-        console.timeLog();
         const db = mongodbClient.db(process.env.DB_NAME);
-        console.log("After db");
-        console.timeLog();
         const collection = db.collection('profiles');
-        console.log("After collection");
-        console.timeLog();
         profile = await collection.findOne({userkey: args.userkey});
-        console.log("After find");
-        console.timeLog();
     } finally {
         await mongodbClient.close();
-        console.log("After close");
-        console.timeLog();
-        console.timeEnd();
     }
 
     if ( !profile ) {
