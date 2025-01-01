@@ -25,8 +25,8 @@ type ProfileContentProps = {
 const ProfileContent : React.FC<ProfileContentProps> = ({
     error = false,
     loading = false,
-    name = '',
-    tagline = '',
+    name,
+    tagline,
     skills = [],
 }) => {
 

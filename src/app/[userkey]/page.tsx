@@ -4,14 +4,14 @@ import { headers } from 'next/headers';
 import Profile from '@/components/Profile';
 import ApolloClientContainer from '@/components/ApolloClientContainer';
 
+type ProfilePageProps = {
+    readonly params: Promise<{userkey:string}>;
+};
+
 /**
  * A page to display the profile information for an individual.
  */
-export default async function ProfilePage({
-    params,
-} : {
-    params: Promise<{userkey:string}>
-}) {
+const ProfilePage: React.FC<ProfilePageProps> = async ({ params }) => {
     const userkey = (await params).userkey;
 
     // Validate the user key to make sure we don't have a bad request.
@@ -32,4 +32,6 @@ export default async function ProfilePage({
             }
         </ApolloClientContainer>
     );
-}
+};
+
+export default ProfilePage;

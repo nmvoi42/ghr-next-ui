@@ -11,8 +11,6 @@ import {
     Typography,
 } from '@mui/material';
 
-//import { Timeline } from '@mui/lab';
-
 import { gql, useLazyQuery } from '@apollo/client';
 
 import ProfileAppBar from '@/components/ProfileAppBar';

@@ -7,6 +7,7 @@ import {
 import { WordCloudChart } from '@carbon/charts-react'
 
 import type { Skill } from '@/types/ProfileTypes';
+import EmptyState from '../EmptyState';
 
 type SkillsWordCloudProps = {
     loading?: boolean,
@@ -24,7 +25,20 @@ const SkillsWordCloud : React.FC<SkillsWordCloudProps> = ({
     skills,
 }) => {
 
-    if ( !loading ) {
+    let skillsContent: JSX.Element | null = null;
+
+    if ( loading ) {
+
+        // If we are still loading the data, display a skeleton animation in
+        // place of the chart.
+        skillsContent = (
+            <Skeleton variant="rounded" height={400} />
+        );
+
+    } else {
+
+        // If we have finished loading, convert the skills data
+        // into the chart format and display it.
         const wordCloudData = skills.map( (skill) => (
             {
                 word: skill.skill,
@@ -33,8 +47,10 @@ const SkillsWordCloud : React.FC<SkillsWordCloudProps> = ({
             }
         ));
 
-        return (
-            <Container disableGutters={true} maxWidth={'lg'} >
+        if ( wordCloudData ) {
+
+            // Display the skills data in a word cloud chart.
+            skillsContent = (
                 <WordCloudChart
                     data={ wordCloudData }
                     options={{
@@ -52,19 +68,28 @@ const SkillsWordCloud : React.FC<SkillsWordCloudProps> = ({
                         height: '400px',
                         theme: 'g100',
                     }}
-                >
-                </WordCloudChart>
-            </Container>
-        );
-    } else {
-        // If we are loading, display a skeleton animation in
-        // place of the chart.
-        return (
-            <Container disableGutters={true} maxWidth={'lg'} >
-                <Skeleton variant="rounded" height={400} />
-            </Container>
-        );
+                />
+            );
+
+        } else {
+
+            // No data to display, show an empty state.
+            skillsContent = (
+                <EmptyState
+                    error
+                    message="Unable to display data."
+                />
+            );
+
+        }
     }
+
+    // Render the content in a fixed size container.
+    return (
+        <Container disableGutters={true} maxWidth={'lg'} >
+            { skillsContent }
+        </Container>
+    );
 }
 
 export default SkillsWordCloud;
