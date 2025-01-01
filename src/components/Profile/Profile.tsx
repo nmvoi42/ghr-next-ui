@@ -32,7 +32,7 @@ const ProfileFooter : React.FC = () => {
         <Card>
             <CardContent>
                 <Typography variant="body2">
-                    This simple demo site was constructed using Javascript/Typescript, NextJS, GraphQL, MaterialUI, Carbon Charts.
+                    This simple demo site was constructed using Javascript/Typescript, NextJS + React, GraphQL, MaterialUI, Carbon Charts, MongoDB.
                 </Typography>
             </CardContent>
         </Card>
@@ -40,8 +40,8 @@ const ProfileFooter : React.FC = () => {
 };
 
 const GET_PROFILE_QUERY = gql`
-        query getProfile {
-            profile {
+        query getProfile($userkey: String!) {
+            profile(userkey: $userkey) {
                 userkey
                 name
                 tagline

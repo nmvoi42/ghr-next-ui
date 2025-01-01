@@ -26,7 +26,7 @@ const schema = gql`
     }
 
     type Query {
-        profile: Profile
+        profile(userkey: String!): Profile
         ping: String
     }
 
