@@ -27,7 +27,7 @@ type ProfileProps = {
  */
 const ProfileFooter : React.FC = () => {
     return (
-        <Card>
+        <Card component="footer" >
             <CardContent>
                 <Typography variant="body2">
                     This simple demo site was constructed using Javascript/Typescript, NextJS + React, GraphQL, MaterialUI, Carbon Charts, MongoDB.
@@ -99,6 +99,7 @@ const Profile : React.FC<ProfileProps> = ({
                 name={profileName}
                 tagline={profileQueryInfo.data?.profile?.tagline}
                 skills={profileQueryInfo.data?.profile?.skills}
+                experience={profileQueryInfo.data?.profile?.experience}
             />
         );
     } else {
@@ -106,19 +107,21 @@ const Profile : React.FC<ProfileProps> = ({
         // not be looked up.
         // Should provide a status and suggestion to resolve.
         profileContent = (
-            <CardContent>
-                <EmptyState
-                    error
-                    message="Sorry, we don't recognize what you are looking for." />
-                { (hint)?(
-                    <>
-                        { "Hint: " }
-                        <Link href={'/'+hint} underline="always" color="primary" sx={{ textTransform: "capitalize" }} >
-                            { "Try "+hint }
-                        </Link>
-                    </>
-                ):'' }
-            </CardContent>
+            <Card>
+                <CardContent>
+                    <EmptyState
+                        error
+                        message="Sorry, we don't recognize what you are looking for." />
+                    { (hint)?(
+                        <>
+                            { "Hint: " }
+                            <Link href={'/'+hint} underline="always" color="primary" sx={{ textTransform: "capitalize" }} >
+                                { "Try "+hint }
+                            </Link>
+                        </>
+                    ):'' }
+                </CardContent>
+            </Card>
         );
     }
 
@@ -129,11 +132,10 @@ const Profile : React.FC<ProfileProps> = ({
             <Container maxWidth={'xl'} sx={{
                 paddingTop: '1.25rem',
             }} >
-                <Stack spacing={'0.75rem'} >
-                    <Card>
+                <Stack spacing="0.75rem" >
+                    <main>
                         {profileContent}
-                    </Card>
-
+                    </main>
                     <ProfileFooter/>
                 </Stack>
             </Container>

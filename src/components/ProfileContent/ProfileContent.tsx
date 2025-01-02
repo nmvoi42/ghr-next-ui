@@ -1,33 +1,38 @@
 import {
+    Card,
     CardContent,
     CardHeader,
+    Stack,
 } from '@mui/material';
 
 import EmptyState from '@/components/EmptyState';
 import SkillsWordCloud from '@/components/SkillsWordCloud';
+import ExperienceTimeline from '@/components/ExperienceTimeline';
 
-import type { Skill } from '@/types/ProfileTypes';
+import type { Experience, Skill } from '@/types/ProfileTypes';
 
 type ProfileContentProps = {
     error?: boolean;
     loading?: boolean;
     name?: string;
     tagline?: string;
-    skills?: Array<Skill>;
+    skills?: Skill[];
+    experience?: Experience[];
 };
 
 /**
  * A component to display provided profile values.
  * 
+ * @param {Skill[]} skills - The list of skills
  * @param {string} tagline - Brief tagline for the person.
- * @param {Array<Skill>} skills - The list of skills
  */
 const ProfileContent : React.FC<ProfileContentProps> = ({
     error = false,
+    experience = [],
     loading = false,
     name,
-    tagline,
     skills = [],
+    tagline,
 }) => {
 
     let title = '';
@@ -39,31 +44,73 @@ const ProfileContent : React.FC<ProfileContentProps> = ({
         title = tagline;
     }
 
-    let profileContent = null;
+    let skillsContent = null;
+    let experienceContent = null;
 
+    // Create the content based on the skills data
     if ( !loading && ( error || !title && !skills ) ) {
         title = '';
-        profileContent = (
+        skillsContent = (
             <EmptyState
                 error
                 message="Unable to display data."
                 />
         );
     } else {
-        profileContent = (
+        skillsContent = (
             <SkillsWordCloud
                 loading={loading}
                 skills={skills} />
         )
     }
 
+    // Create the content based on the experience data
+    if ( !loading && ( error || !title && !experience ) ) {
+        experienceContent = (
+            <EmptyState
+                error
+                message="Unable to display data."
+                />
+        );
+    } else {
+        experienceContent = (
+            <ExperienceTimeline
+                loading={loading}
+                experience={experience} />
+        );
+    }
+
     return (
-        <>
-            <CardHeader title={ title } sx={{ textTransform: "capitalize" }} />
-            <CardContent>
-                { profileContent }
-            </CardContent>
-        </>
+        <Stack spacing={'0.75rem'} >
+            <Card elevation={20} >
+                <CardHeader
+                    title={ title }
+                    titleTypographyProps={{
+                        variant: 'h4',
+                        component: 'h2',
+                        sx: (theme) => ({
+                            color: theme.palette.primary.main,
+                            fontWeight: 500,
+                        }),
+                    }}
+                    sx={{
+                        textTransform: "capitalize",
+                        py: "0.5rem",
+                    }} />
+            </Card>
+
+            <Card variant="outlined" >
+                <CardContent>
+                    { skillsContent }
+                </CardContent>
+            </Card>
+
+            <Card>
+                <CardContent>
+                    { experienceContent }
+                </CardContent>
+            </Card>
+        </Stack>
     );
 }
 

@@ -3,11 +3,12 @@
 import {
     Container,
     Skeleton,
+    Typography,
 } from '@mui/material';
 import { WordCloudChart } from '@carbon/charts-react'
 
 import type { Skill } from '@/types/ProfileTypes';
-import EmptyState from '../EmptyState';
+import EmptyState from '@/components/EmptyState';
 
 type SkillsWordCloudProps = {
     loading?: boolean,
@@ -54,17 +55,18 @@ const SkillsWordCloud : React.FC<SkillsWordCloudProps> = ({
                 <WordCloudChart
                     data={ wordCloudData }
                     options={{
-                        title: 'Skills',
+                        title: 'Technologies',
                         resizable: true,
                         color: {
-                            pairing: {
-                                option: 3
+                            scale: {
+                                "Backend": "#fff1f1",
+                                "Frontend": "#ffc030",
                             },
                         },
-                        tooltip: {
-                            wordLabel: 'Skill',
-                            valueLabel: 'Level',
-                        },
+                        // Carbon charts tooltips look nice, but are
+                        // not accessibility compliant because they fail
+                        // the hoverable checks.
+                        tooltip: { enabled: false },
                         height: '400px',
                         theme: 'g100',
                     }}
@@ -86,8 +88,16 @@ const SkillsWordCloud : React.FC<SkillsWordCloudProps> = ({
 
     // Render the content in a fixed size container.
     return (
-        <Container disableGutters={true} maxWidth={'lg'} >
-            { skillsContent }
+        <Container disableGutters={true} maxWidth={'xl'} >
+            <Typography
+                component='h3'
+                variant='h5'
+                sx={{ marginLeft: "1rem" }} >
+                Skills
+            </Typography>
+            <Container disableGutters={true} maxWidth={'lg'} >
+                { skillsContent }
+            </Container>
         </Container>
     );
 }

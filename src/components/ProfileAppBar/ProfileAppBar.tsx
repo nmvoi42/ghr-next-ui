@@ -21,32 +21,34 @@ const ProfileAppBar: React.FC<ProfileAppBarProps> = ({
     title = "",
 }) => {
     return (
-        <AppBar position="sticky" >
-            <Container id={"toolbar_container"} disableGutters={true} maxWidth={false} sx={(theme) => ({
-                [theme.breakpoints.down('xl')]: {
-                    paddingLeft: '0',
-                },
-                [theme.breakpoints.up('xl')]: {
-                    paddingLeft: '1rem',
-                },
-                [theme.breakpoints.up(1700)]: {
-                    paddingLeft: '3rem',
-                },
-                [theme.breakpoints.up(1800)]: {
-                    paddingLeft: '5rem',
-                },
-            })} >
-                <Toolbar disableGutters={false} sx={{
-                }} >
-                    <Stack direction="row" sx={{ display: "flex", alignItems: "center" }} >
-                        <ArrowForwardIosRounded fontSize="large" />
-                        <Typography variant="h4" component="div" sx={{ textTransform: "capitalize" }} >
-                            { title }
-                        </Typography>
-                    </Stack>
-                </Toolbar>
-            </Container>
-        </AppBar>
+        <>
+            <AppBar position="fixed" >
+                <Container id={"toolbar_container"} disableGutters={true} maxWidth={false} sx={(theme) => ({
+                    [theme.breakpoints.down('xl')]: {
+                        paddingLeft: '0',
+                    },
+                    [theme.breakpoints.up('xl')]: {
+                        paddingLeft: '1rem',
+                    },
+                    [theme.breakpoints.up(1700)]: {
+                        paddingLeft: '3rem',
+                    },
+                    [theme.breakpoints.up(1800)]: {
+                        paddingLeft: '5rem',
+                    },
+                })} >
+                    <Toolbar disableGutters={false} >
+                        <Stack direction="row" sx={{ display: "flex", alignItems: "center" }} >
+                            <ArrowForwardIosRounded fontSize="large" />
+                            <Typography variant="h3" component="h1" sx={{ textTransform: "capitalize" }} >
+                                { title }
+                            </Typography>
+                        </Stack>
+                    </Toolbar>
+                </Container>
+            </AppBar>
+            <Toolbar disableGutters={false} />
+        </>
     );
 };
 
