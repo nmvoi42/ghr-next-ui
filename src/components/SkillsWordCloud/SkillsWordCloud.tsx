@@ -52,27 +52,25 @@ const SkillsWordCloud : React.FC<SkillsWordCloudProps> = ({
 
             // Display the skills data in a word cloud chart.
             skillsContent = (
-                <>
-                    <WordCloudChart
-                        data={ wordCloudData }
-                        options={{
-                            title: 'Technologies',
-                            resizable: true,
-                            color: {
-                                scale: {
-                                    "Backend": "#fff1f1",
-                                    "Frontend": "#ffc030",
-                                },
+                <WordCloudChart
+                    data={ wordCloudData }
+                    options={{
+                        title: 'Technologies',
+                        resizable: true,
+                        color: {
+                            scale: {
+                                "Backend": "#fff1f1",
+                                "Frontend": "#ffc030",
                             },
-                            // Carbon charts tooltips look nice, but are
-                            // not accessibility compliant because they fail
-                            // the hoverable checks.
-                            tooltip: { enabled: false },
-                            height: '400px',
-                            theme: 'g100',
-                        }}
-                    />
-                </>
+                        },
+                        // Carbon charts tooltips look nice, but are
+                        // not accessibility compliant because they fail
+                        // the hoverable checks.
+                        tooltip: { enabled: false },
+                        height: '400px',
+                        theme: 'g100',
+                    }}
+                />
             );
 
         } else {
@@ -91,7 +89,10 @@ const SkillsWordCloud : React.FC<SkillsWordCloudProps> = ({
     // Render the content in a fixed size container.
     return (
         <Container disableGutters={true} maxWidth={'xl'} >
-            <Typography variant='h5' sx={{ marginLeft: "1rem" }} >
+            <Typography
+                component='h3'
+                variant='h5'
+                sx={{ marginLeft: "1rem" }} >
                 Skills
             </Typography>
             <Container disableGutters={true} maxWidth={'lg'} >

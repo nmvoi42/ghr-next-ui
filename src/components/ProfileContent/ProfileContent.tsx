@@ -2,6 +2,7 @@ import {
     Card,
     CardContent,
     CardHeader,
+    Stack,
 } from '@mui/material';
 
 import EmptyState from '@/components/EmptyState';
@@ -80,12 +81,13 @@ const ProfileContent : React.FC<ProfileContentProps> = ({
     }
 
     return (
-        <>
+        <Stack spacing={'0.75rem'} >
             <Card elevation={20} >
                 <CardHeader
                     title={ title }
                     titleTypographyProps={{
                         variant: 'h4',
+                        component: 'h2',
                         sx: (theme) => ({
                             color: theme.palette.primary.main,
                             fontWeight: 500,
@@ -108,7 +110,7 @@ const ProfileContent : React.FC<ProfileContentProps> = ({
                     { experienceContent }
                 </CardContent>
             </Card>
-        </>
+        </Stack>
     );
 }
 

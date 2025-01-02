@@ -56,77 +56,78 @@ const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({
                 </TimelineItem>
             </>
         );
-    } else {
-        if ( experience ) {
-            experienceContent = (
-                <>
-                    { experience?.map( (item, index) => {
-                        const key = `${item.title} ${item.company} ${item.start} ${item.end}`;
+    } else if ( experience ) {
+        experienceContent = (
+            <>
+                { experience?.map( (item, index) => {
+                    const key = `${item.title} ${item.company} ${item.start} ${item.end}`;
 
-                        let titleAndCompany = item.company ?? '';
-                        if ( titleAndCompany ) {
-                            titleAndCompany += ' - ';
-                        }
-                        titleAndCompany += item.title ?? '';
+                    let titleAndCompany = item.company ?? '';
+                    if ( titleAndCompany ) {
+                        titleAndCompany += ' - ';
+                    }
+                    titleAndCompany += item.title ?? '';
 
-                        let startAndEnd = standardDateStringToLocalizedDateString( item.start );
-                        if ( startAndEnd ) {
-                            startAndEnd += " - ";
-                        }
-                        if ( !item.end ) {
-                            startAndEnd += "Present";
-                        } else {
-                            startAndEnd += standardDateStringToLocalizedDateString( item.end );
-                        }
+                    let startAndEnd = standardDateStringToLocalizedDateString( item.start );
+                    if ( startAndEnd ) {
+                        startAndEnd += " - ";
+                    }
+                    if ( !item.end ) {
+                        startAndEnd += "Present";
+                    } else {
+                        startAndEnd += standardDateStringToLocalizedDateString( item.end );
+                    }
 
-                        return (
-                            <TimelineItem key={key} >
-                                <TimelineSeparator>
-                                    <TimelineDot />
-                                    {
-                                    ( index !== experience.length-1 ) ? (
-                                        <TimelineConnector />
-                                    ) : null
-                                    }
-                                </TimelineSeparator>
-                                <TimelineContent>
-                                    <Typography variant='h6' sx={ (theme) => ( {
-                                        color: theme.palette.primary.main,
-                                    } ) } >
-                                        {titleAndCompany}
-                                    </Typography>
-                                    <Typography>
-                                        {startAndEnd}
-                                    </Typography>
-                                </TimelineContent>
+                    return (
+                        <TimelineItem key={key} >
+                            <TimelineSeparator>
+                                <TimelineDot />
                                 {
-                                ( item.description ) ? (
-                                    <TimelineContent>
-                                        <Typography variant="body1" >
-                                            { item.description }
-                                        </Typography>
-                                    </TimelineContent>
+                                ( index !== experience.length-1 ) ? (
+                                    <TimelineConnector />
                                 ) : null
                                 }
-                            </TimelineItem>
-                        );
-                    } ) }
-                </>
-            );
-        } else {
-            // No data to display, show an empty state.
-            experienceContent = (
-                <EmptyState
-                    error
-                    message="Unable to display data."
-                />
-            );
-        }
+                            </TimelineSeparator>
+                            <TimelineContent>
+                                <Typography component='h4' variant='h6' sx={ (theme) => ( {
+                                    color: theme.palette.primary.main,
+                                } ) } >
+                                    {titleAndCompany}
+                                </Typography>
+                                <Typography>
+                                    {startAndEnd}
+                                </Typography>
+                            </TimelineContent>
+                            {
+                            ( item.description ) ? (
+                                <TimelineContent>
+                                    <Typography variant="body1" >
+                                        { item.description }
+                                    </Typography>
+                                </TimelineContent>
+                            ) : null
+                            }
+                        </TimelineItem>
+                    );
+                } ) }
+            </>
+        );
+    } else {
+        // No data to display, show an empty state.
+        experienceContent = (
+            <EmptyState
+                error
+                message="Unable to display data."
+            />
+        );
     }
 
     return (
         <Container disableGutters={true} maxWidth={'xl'} >
-            <Typography variant='h5' sx={{ marginLeft: "1rem" }} >
+            <Typography
+                component='h3'
+                variant='h5'
+                sx={{ marginLeft: "1rem" }} >
                 Experience
             </Typography>
             <Container disableGutters={true} maxWidth={'lg'} >

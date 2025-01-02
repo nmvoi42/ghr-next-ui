@@ -40,7 +40,7 @@ const ProfileAppBar: React.FC<ProfileAppBarProps> = ({
                     <Toolbar disableGutters={false} >
                         <Stack direction="row" sx={{ display: "flex", alignItems: "center" }} >
                             <ArrowForwardIosRounded fontSize="large" />
-                            <Typography variant="h3" component="div" sx={{ textTransform: "capitalize" }} >
+                            <Typography variant="h3" component="h1" sx={{ textTransform: "capitalize" }} >
                                 { title }
                             </Typography>
                         </Stack>

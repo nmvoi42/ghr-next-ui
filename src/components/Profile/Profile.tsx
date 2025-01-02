@@ -27,7 +27,7 @@ type ProfileProps = {
  */
 const ProfileFooter : React.FC = () => {
     return (
-        <Card>
+        <Card component="footer" >
             <CardContent>
                 <Typography variant="body2">
                     This simple demo site was constructed using Javascript/Typescript, NextJS + React, GraphQL, MaterialUI, Carbon Charts, MongoDB.
@@ -132,8 +132,10 @@ const Profile : React.FC<ProfileProps> = ({
             <Container maxWidth={'xl'} sx={{
                 paddingTop: '1.25rem',
             }} >
-                <Stack spacing={'0.75rem'} >
-                    {profileContent}
+                <Stack spacing="0.75rem" >
+                    <main>
+                        {profileContent}
+                    </main>
                     <ProfileFooter/>
                 </Stack>
             </Container>
