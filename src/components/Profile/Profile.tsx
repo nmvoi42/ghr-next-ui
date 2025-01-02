@@ -106,19 +106,21 @@ const Profile : React.FC<ProfileProps> = ({
         // not be looked up.
         // Should provide a status and suggestion to resolve.
         profileContent = (
-            <CardContent>
-                <EmptyState
-                    error
-                    message="Sorry, we don't recognize what you are looking for." />
-                { (hint)?(
-                    <>
-                        { "Hint: " }
-                        <Link href={'/'+hint} underline="always" color="primary" sx={{ textTransform: "capitalize" }} >
-                            { "Try "+hint }
-                        </Link>
-                    </>
-                ):'' }
-            </CardContent>
+            <Card>
+                <CardContent>
+                    <EmptyState
+                        error
+                        message="Sorry, we don't recognize what you are looking for." />
+                    { (hint)?(
+                        <>
+                            { "Hint: " }
+                            <Link href={'/'+hint} underline="always" color="primary" sx={{ textTransform: "capitalize" }} >
+                                { "Try "+hint }
+                            </Link>
+                        </>
+                    ):'' }
+                </CardContent>
+            </Card>
         );
     }
 
@@ -130,10 +132,7 @@ const Profile : React.FC<ProfileProps> = ({
                 paddingTop: '1.25rem',
             }} >
                 <Stack spacing={'0.75rem'} >
-                    <Card>
-                        {profileContent}
-                    </Card>
-
+                    {profileContent}
                     <ProfileFooter/>
                 </Stack>
             </Container>

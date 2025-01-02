@@ -1,10 +1,12 @@
 import {
+    Card,
     CardContent,
     CardHeader,
 } from '@mui/material';
 
 import EmptyState from '@/components/EmptyState';
 import SkillsWordCloud from '@/components/SkillsWordCloud';
+import ExperienceTimeline from '@/components/ExperienceTimeline';
 
 import type { Skill } from '@/types/ProfileTypes';
 
@@ -39,30 +41,62 @@ const ProfileContent : React.FC<ProfileContentProps> = ({
         title = tagline;
     }
 
-    let profileContent = null;
+    let skillsContent = null;
+    let experienceContent = null;
 
     if ( !loading && ( error || !title && !skills ) ) {
         title = '';
-        profileContent = (
+        skillsContent = (
             <EmptyState
                 error
                 message="Unable to display data."
                 />
         );
     } else {
-        profileContent = (
+        skillsContent = (
             <SkillsWordCloud
                 loading={loading}
                 skills={skills} />
         )
     }
 
+    const experienceTestValues = [
+        {
+            "title": "Senior Software Developer",
+            "company": "IBM",
+            "start": "2020",
+            "end": "2024-10",
+            "description": "Full stack developer using python, javascript, and SQL within React, NextJS, and Flask",
+        },
+        {
+            "title": "Software Developer",
+            "company": "IBM",
+            "start": "2016-09",
+            "end": "2020",
+            "description": null,
+        }
+    ];
+    experienceContent = (
+        <ExperienceTimeline experience={experienceTestValues} />
+    );
+
     return (
         <>
-            <CardHeader title={ title } sx={{ textTransform: "capitalize" }} />
-            <CardContent>
-                { profileContent }
-            </CardContent>
+            <Card>
+                <CardHeader title={ title } titleTypographyProps={{ variant: 'h4' }} sx={{ textTransform: "capitalize" }} />
+            </Card>
+
+            <Card>
+                <CardContent>
+                    { skillsContent }
+                </CardContent>
+            </Card>
+
+            <Card>
+                <CardContent>
+                    { experienceContent }
+                </CardContent>
+            </Card>
         </>
     );
 }

@@ -10,8 +10,8 @@ export type Experience = {
     title: string;
     company: string;
     start: string;
-    end?: string;
-    description?: string;
+    end?: string | null;
+    description?: string | null;
 };
 
 export type UserInfo = {

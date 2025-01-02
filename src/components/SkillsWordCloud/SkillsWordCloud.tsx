@@ -3,6 +3,7 @@
 import {
     Container,
     Skeleton,
+    Typography,
 } from '@mui/material';
 import { WordCloudChart } from '@carbon/charts-react'
 
@@ -51,24 +52,26 @@ const SkillsWordCloud : React.FC<SkillsWordCloudProps> = ({
 
             // Display the skills data in a word cloud chart.
             skillsContent = (
-                <WordCloudChart
-                    data={ wordCloudData }
-                    options={{
-                        title: 'Skills',
-                        resizable: true,
-                        color: {
-                            pairing: {
-                                option: 3
+                <>
+                    <WordCloudChart
+                        data={ wordCloudData }
+                        options={{
+                            title: 'Technologies',
+                            resizable: true,
+                            color: {
+                                pairing: {
+                                    option: 3
+                                },
                             },
-                        },
-                        tooltip: {
-                            wordLabel: 'Skill',
-                            valueLabel: 'Level',
-                        },
-                        height: '400px',
-                        theme: 'g100',
-                    }}
-                />
+                            tooltip: {
+                                wordLabel: 'Skill',
+                                valueLabel: 'Level',
+                            },
+                            height: '400px',
+                            theme: 'g100',
+                        }}
+                    />
+                </>
             );
 
         } else {
@@ -86,8 +89,13 @@ const SkillsWordCloud : React.FC<SkillsWordCloudProps> = ({
 
     // Render the content in a fixed size container.
     return (
-        <Container disableGutters={true} maxWidth={'lg'} >
-            { skillsContent }
+        <Container disableGutters={true} maxWidth={'xl'} >
+            <Typography variant='h5' sx={{ marginLeft: "1rem" }} >
+                Skills
+            </Typography>
+            <Container disableGutters={true} maxWidth={'lg'} >
+                { skillsContent }
+            </Container>
         </Container>
     );
 }
