@@ -99,6 +99,7 @@ const Profile : React.FC<ProfileProps> = ({
                 name={profileName}
                 tagline={profileQueryInfo.data?.profile?.tagline}
                 skills={profileQueryInfo.data?.profile?.skills}
+                experience={profileQueryInfo.data?.profile?.experience}
             />
         );
     } else {

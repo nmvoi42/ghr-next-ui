@@ -8,28 +8,30 @@ import EmptyState from '@/components/EmptyState';
 import SkillsWordCloud from '@/components/SkillsWordCloud';
 import ExperienceTimeline from '@/components/ExperienceTimeline';
 
-import type { Skill } from '@/types/ProfileTypes';
+import type { Experience, Skill } from '@/types/ProfileTypes';
 
 type ProfileContentProps = {
     error?: boolean;
     loading?: boolean;
     name?: string;
     tagline?: string;
-    skills?: Array<Skill>;
+    skills?: Skill[];
+    experience?: Experience[];
 };
 
 /**
  * A component to display provided profile values.
  * 
+ * @param {Skill[]} skills - The list of skills
  * @param {string} tagline - Brief tagline for the person.
- * @param {Array<Skill>} skills - The list of skills
  */
 const ProfileContent : React.FC<ProfileContentProps> = ({
     error = false,
+    experience = [],
     loading = false,
     name,
-    tagline,
     skills = [],
+    tagline,
 }) => {
 
     let title = '';
@@ -44,6 +46,7 @@ const ProfileContent : React.FC<ProfileContentProps> = ({
     let skillsContent = null;
     let experienceContent = null;
 
+    // Create the content based on the skills data
     if ( !loading && ( error || !title && !skills ) ) {
         title = '';
         skillsContent = (
@@ -60,33 +63,41 @@ const ProfileContent : React.FC<ProfileContentProps> = ({
         )
     }
 
-    const experienceTestValues = [
-        {
-            "title": "Senior Software Developer",
-            "company": "IBM",
-            "start": "2020",
-            "end": "2024-10",
-            "description": "Full stack developer using python, javascript, and SQL within React, NextJS, and Flask",
-        },
-        {
-            "title": "Software Developer",
-            "company": "IBM",
-            "start": "2016-09",
-            "end": "2020",
-            "description": null,
-        }
-    ];
-    experienceContent = (
-        <ExperienceTimeline experience={experienceTestValues} />
-    );
+    // Create the content based on the experience data
+    if ( !loading && ( error || !title && !experience ) ) {
+        experienceContent = (
+            <EmptyState
+                error
+                message="Unable to display data."
+                />
+        );
+    } else {
+        experienceContent = (
+            <ExperienceTimeline
+                loading={loading}
+                experience={experience} />
+        );
+    }
 
     return (
         <>
-            <Card>
-                <CardHeader title={ title } titleTypographyProps={{ variant: 'h4' }} sx={{ textTransform: "capitalize" }} />
+            <Card elevation={20} >
+                <CardHeader
+                    title={ title }
+                    titleTypographyProps={{
+                        variant: 'h4',
+                        sx: (theme) => ({
+                            color: theme.palette.primary.main,
+                            fontWeight: 500,
+                        }),
+                    }}
+                    sx={{
+                        textTransform: "capitalize",
+                        py: "0.5rem",
+                    }} />
             </Card>
 
-            <Card>
+            <Card variant="outlined" >
                 <CardContent>
                     { skillsContent }
                 </CardContent>
