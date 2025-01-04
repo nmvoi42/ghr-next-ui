@@ -4,7 +4,9 @@ import {
     Container,
     Skeleton,
     Typography,
+    useTheme,
 } from '@mui/material';
+
 import { WordCloudChart } from '@carbon/charts-react'
 
 import type { Skill } from '@/types/ProfileTypes';
@@ -27,6 +29,8 @@ const SkillsWordCloud : React.FC<SkillsWordCloudProps> = ({
 }) => {
 
     let skillsContent: JSX.Element | null = null;
+
+    const theme = useTheme();
 
     if ( loading ) {
 
@@ -59,8 +63,8 @@ const SkillsWordCloud : React.FC<SkillsWordCloudProps> = ({
                         resizable: true,
                         color: {
                             scale: {
-                                "Backend": "#fff1f1",
-                                "Frontend": "#ffc030",
+                                "Backend": theme.palette.secondary.main,
+                                "Frontend": theme.palette.primary.main,
                             },
                         },
                         // Carbon charts tooltips look nice, but are
