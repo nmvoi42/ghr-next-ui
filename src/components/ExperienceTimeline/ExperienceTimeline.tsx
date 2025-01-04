@@ -3,6 +3,8 @@ import {
     Container,
     Skeleton,
     Typography,
+    useMediaQuery,
+    useTheme,
 } from '@mui/material';
 
 import {
@@ -31,6 +33,9 @@ const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({
     loading = false,
 }) => {
     let experienceContent : JSX.Element | null = null;
+
+    const theme = useTheme();
+    const aboveMediumSize = useMediaQuery(theme.breakpoints.up('md'));
 
     if ( loading ) {
         // If we are still loading the data, display a skeleton animation in
@@ -94,12 +99,19 @@ const ExperienceTimeline: React.FC<ExperienceTimelineProps> = ({
                                 } ) } >
                                     {titleAndCompany}
                                 </Typography>
-                                <Typography>
+                                <Typography variant="body1">
                                     {startAndEnd}
                                 </Typography>
+                                {
+                                ( item.description && !aboveMediumSize ) ? (
+                                    <Typography variant="body2" sx={{ marginTop: "1rem" }} >
+                                        { item.description }
+                                    </Typography>
+                                ) : null
+                                }
                             </TimelineContent>
                             {
-                            ( item.description ) ? (
+                            ( item.description && aboveMediumSize ) ? (
                                 <TimelineContent>
                                     <Typography variant="body1" >
                                         { item.description }
