@@ -1,6 +1,7 @@
 import {
     AppBar,
     Container,
+    Grid2 as Grid,
     Stack,
     Toolbar,
     Typography,
@@ -38,12 +39,33 @@ const ProfileAppBar: React.FC<ProfileAppBarProps> = ({
                     },
                 })} >
                     <Toolbar disableGutters={false} >
-                        <Stack direction="row" sx={{ display: "flex", alignItems: "center" }} >
-                            <ArrowForwardIosRounded fontSize="large" />
-                            <Typography variant="h3" component="h1" sx={{ textTransform: "capitalize" }} >
-                                { title }
-                            </Typography>
-                        </Stack>
+                        <Grid container sx={{ width: "100%" }} >
+                            <Grid size={9} >
+                                <Stack direction="row" sx={{ alignItems: "center", width: "100%" }} >
+                                    <ArrowForwardIosRounded fontSize="large" />
+                                    <Typography variant="h3" component="h1"
+                                        sx={(theme) => ({
+                                            fontSize: '0',
+                                            textTransform: "capitalize",
+                                            [theme.breakpoints.up('sm')]: {
+                                                fontSize: '1.7rem',
+                                                display: "block",
+                                            },
+                                            [theme.breakpoints.up('md')]: {
+                                                fontSize: '2.5rem',
+                                                display: "block",
+                                            },
+                                            [theme.breakpoints.up('lg')]: {
+                                                fontSize: '3rem',
+                                                display: "block",
+                                            },
+                                        })}
+                                    >
+                                        { title }
+                                    </Typography>
+                                </Stack>
+                            </Grid>
+                        </Grid>
                     </Toolbar>
                 </Container>
             </AppBar>
