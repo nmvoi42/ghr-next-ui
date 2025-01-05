@@ -73,6 +73,18 @@ const SkillsWordCloud : React.FC<SkillsWordCloudProps> = ({
                         tooltip: { enabled: false },
                         height: '400px',
                         theme: 'g100',
+                        wordCloud: {
+                            // Height is fixed, base size ranges on width for
+                            // different screen types.
+                            fontSizeRange: (chartSize) => {
+                                if ( chartSize.width <= 400 ) {
+                                    return [10,50];
+                                } else {
+                                    const adjust = (chartSize.width-400)/20;
+                                    return [10 + adjust,50 + adjust];
+                                }
+                            }
+                        },
                     }}
                 />
             );
@@ -92,13 +104,15 @@ const SkillsWordCloud : React.FC<SkillsWordCloudProps> = ({
 
     // Render the content in a fixed size container.
     return (
-        <Container disableGutters={true} maxWidth={'xl'} >
-            <Typography
-                component='h3'
-                variant='h5'
-                sx={{ marginLeft: "1rem" }} >
-                Skills
-            </Typography>
+        <Container disableGutters={true} maxWidth={'xl'} sx={{ marginLeft: "1rem" }} >
+            <Container disableGutters={true} maxWidth={false} >
+                <Typography
+                    component='h3'
+                    variant='h5'
+                >
+                    Skills
+                </Typography>
+            </Container>
             <Container disableGutters={true} maxWidth={'lg'} >
                 { skillsContent }
             </Container>

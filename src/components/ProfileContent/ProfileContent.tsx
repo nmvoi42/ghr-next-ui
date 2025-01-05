@@ -3,7 +3,12 @@ import {
     CardContent,
     CardHeader,
     Stack,
+    Typography,
+    useMediaQuery,
+    useTheme,
 } from '@mui/material';
+
+import type { Theme } from '@mui/material';
 
 import EmptyState from '@/components/EmptyState';
 import SkillsWordCloud from '@/components/SkillsWordCloud';
@@ -35,13 +40,61 @@ const ProfileContent : React.FC<ProfileContentProps> = ({
     tagline,
 }) => {
 
-    let title = '';
+    const theme = useTheme();
+    const belowSmallSize = useMediaQuery(theme.breakpoints.down('sm'));
+
+    const headerTypographySx = (theme: Theme) => ({
+                            color: theme.palette.primary.main,
+                            fontWeight: 500,
+                            [theme.breakpoints.down('sm')]: {
+                                fontSize: "1.6rem",
+                            },
+                            [theme.breakpoints.up('sm')]: {
+                                fontSize: '1.32rem',
+                                display: "block",
+                            },
+                            [theme.breakpoints.up('md')]: {
+                                fontSize: '2rem',
+                                display: "block",
+                            },
+                            [theme.breakpoints.up('lg')]: {
+                                fontSize: '2.5rem',
+                                display: "block",
+                            },
+                        });
+
+    let title = null;
     if ( name && tagline ) {
-        title = name + ' — ' + tagline;
+        if ( belowSmallSize ) {
+            title = (
+                <Stack direction="column">
+                    <Typography variant='h4' component='h2' sx={headerTypographySx} >
+                        { name }
+                    </Typography>
+                    <Typography variant="body1" color="primary" >
+                        { tagline }
+                    </Typography>
+                </Stack>
+            );
+        } else {
+            title = (
+                <Typography variant='h4' component='h2' sx={headerTypographySx} >
+                    { name + ' - ' + tagline }
+                </Typography>
+            );
+        }
     } else if ( name ) {
-        title = name;
+        title = (
+            <Typography variant='h4' component='h2' sx={headerTypographySx}>
+                { name }
+            </Typography>
+        );
     } else if ( tagline ) {
-        title = tagline;
+        title = (
+            <Typography variant='h4' component='h2' sx={headerTypographySx}>
+                { tagline }
+            </Typography>
+        );
     }
 
     let skillsContent = null;
@@ -85,14 +138,6 @@ const ProfileContent : React.FC<ProfileContentProps> = ({
             <Card elevation={20} >
                 <CardHeader
                     title={ title }
-                    titleTypographyProps={{
-                        variant: 'h4',
-                        component: 'h2',
-                        sx: (theme) => ({
-                            color: theme.palette.primary.main,
-                            fontWeight: 500,
-                        }),
-                    }}
                     sx={{
                         textTransform: "capitalize",
                         py: "0.5rem",
