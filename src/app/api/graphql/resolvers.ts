@@ -1,28 +1,6 @@
 
 import { client as mongodbClient } from '@/db/mongodb';
 
-/*
-Profile data will be of a format like:
-
-const testProfileInfo : UserInfo = {
-    userkey: 'john-doe',
-    name: "John Doe",
-    tagline: "Fullstack Developer",
-    skills: [
-        { skill: "Python", level: 5, type: "Language", side: "Backend"},
-        { skill: "Javascript", level: 5, type: "Language", side: "Frontend"},
-    ],
-    experience: [
-        {
-            title: "Senior Software Developer",
-            company: "IBM",
-            start: "2020",
-            end: "2024-10",
-            description: "Full stack developer using python, javascript, within React, NextJS, and Flask",
-        },
-    ],
-};
-*/
 
 type ProfileResolverArgs = {
     userkey: string;
@@ -41,7 +19,19 @@ const profileResolver = async (parent: undefined, args: Record<string,ProfileRes
         await mongodbClient.connect();
         const db = mongodbClient.db(process.env.DB_NAME);
         const collection = db.collection('profiles');
-        profile = await collection.findOne({userkey: args.userkey});
+        const dbProfile = await collection.findOne({userkey: args.userkey});
+        if ( dbProfile ) {
+            profile = {
+                userkey: dbProfile.userkey,
+                name: dbProfile.name ?? '',
+                tagline: dbProfile.tagline ?? '',
+                skills: dbProfile.skills ?? [],
+                experience: dbProfile.experience ?? [],
+                github: dbProfile.github ?? null,
+                linkedin: dbProfile.linkedin ?? null,
+            };
+        }
+
     } finally {
         await mongodbClient.close();
     }

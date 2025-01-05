@@ -23,6 +23,8 @@ const schema = gql`
         tagline: String
         skills: [Skill]
         experience: [Experience]
+        github: String
+        linkedin: String
     }
 
     type Query {
