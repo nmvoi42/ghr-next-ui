@@ -15,7 +15,7 @@ import { gql, useLazyQuery } from '@apollo/client';
 
 import ProfileAppBar from '@/components/ProfileAppBar';
 import ProfileContent from '@/components/ProfileContent';
-import EmptyState from '../EmptyState';
+import EmptyState from '@/components/EmptyState';
 
 type ProfileProps = {
     hint?: string;
@@ -49,6 +49,8 @@ const GET_PROFILE_QUERY = gql`
                 experience {
                     title company start end description
                 }
+                github
+                linkedin
             }
         }
 `;
@@ -112,14 +114,14 @@ const Profile : React.FC<ProfileProps> = ({
                     <EmptyState
                         error
                         message="Sorry, we don't recognize what you are looking for." />
-                    { (hint)?(
+                    { (hint) ? (
                         <>
                             { "Hint: " }
                             <Link href={'/'+hint} underline="always" color="primary" sx={{ textTransform: "capitalize" }} >
                                 { "Try "+hint }
                             </Link>
                         </>
-                    ):'' }
+                    ) : null }
                 </CardContent>
             </Card>
         );
@@ -127,7 +129,11 @@ const Profile : React.FC<ProfileProps> = ({
 
     return (
         <Container disableGutters={true} maxWidth={false} >
-            <ProfileAppBar title={appBarTitle}  />
+            <ProfileAppBar
+                title={appBarTitle}
+                github={profileQueryInfo.data?.profile?.github}
+                linkedin={profileQueryInfo.data?.profile?.linkedin}
+            />
 
             <Container maxWidth={'xl'} sx={{
                 paddingTop: '1.25rem',
