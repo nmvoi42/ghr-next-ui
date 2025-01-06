@@ -47,7 +47,7 @@ const ProfileContent : React.FC<ProfileContentProps> = ({
                             color: theme.palette.primary.main,
                             fontWeight: 500,
                             [theme.breakpoints.down('sm')]: {
-                                fontSize: "1.6rem",
+                                fontSize: "1.5rem",
                             },
                             [theme.breakpoints.up('sm')]: {
                                 fontSize: '1.32rem',

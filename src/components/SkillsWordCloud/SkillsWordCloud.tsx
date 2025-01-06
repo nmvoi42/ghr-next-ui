@@ -59,7 +59,7 @@ const SkillsWordCloud : React.FC<SkillsWordCloudProps> = ({
                 <WordCloudChart
                     data={ wordCloudData }
                     options={{
-                        title: 'Technologies',
+                        title: '',
                         resizable: true,
                         color: {
                             scale: {
@@ -104,13 +104,13 @@ const SkillsWordCloud : React.FC<SkillsWordCloudProps> = ({
 
     // Render the content in a fixed size container.
     return (
-        <Container disableGutters={true} maxWidth={'xl'} sx={{ marginLeft: "1rem" }} >
+        <Container disableGutters={false} maxWidth={'xl'} >
             <Container disableGutters={true} maxWidth={false} >
                 <Typography
                     component='h3'
                     variant='h5'
                 >
-                    Skills
+                    Technologies
                 </Typography>
             </Container>
             <Container disableGutters={true} maxWidth={'lg'} >
