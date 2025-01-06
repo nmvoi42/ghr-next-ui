@@ -59,7 +59,10 @@ const SkillsWordCloud : React.FC<SkillsWordCloudProps> = ({
                 <WordCloudChart
                     data={ wordCloudData }
                     options={{
-                        title: '',
+                        // Note: Carbon charts puts a heading role on the title element,
+                        // even if it's empty, which can cause accessibility problems,
+                        // so this needs to contain a title.
+                        title: 'Development',
                         resizable: true,
                         color: {
                             scale: {
@@ -78,10 +81,10 @@ const SkillsWordCloud : React.FC<SkillsWordCloudProps> = ({
                             // different screen types.
                             fontSizeRange: (chartSize) => {
                                 if ( chartSize.width <= 400 ) {
-                                    return [10,50];
+                                    return [10,40];
                                 } else {
                                     const adjust = (chartSize.width-400)/20;
-                                    return [10 + adjust,50 + adjust];
+                                    return [10 + adjust,40 + adjust];
                                 }
                             }
                         },

@@ -102,16 +102,14 @@ const Profile : React.FC<ProfileProps> = ({
         // The user was fetched (or is loading), display the related information
         profileContent = (
             <Grid size={{ xs: 12, xl: 9 }} >
-                <main>
-                    <ProfileContent
-                        loading={profileQueryInfo.loading || !profileQueryInfo.called}
-                        error={!!profileQueryInfo.error}
-                        name={profileName}
-                        tagline={profileQueryInfo.data?.profile?.tagline}
-                        skills={profileQueryInfo.data?.profile?.skills}
-                        experience={profileQueryInfo.data?.profile?.experience}
-                    />
-                </main>
+                <ProfileContent
+                    loading={profileQueryInfo.loading || !profileQueryInfo.called}
+                    error={!!profileQueryInfo.error}
+                    name={profileName}
+                    tagline={profileQueryInfo.data?.profile?.tagline}
+                    skills={profileQueryInfo.data?.profile?.skills}
+                    experience={profileQueryInfo.data?.profile?.experience}
+                />
             </Grid>
         );
     } else {
@@ -120,23 +118,21 @@ const Profile : React.FC<ProfileProps> = ({
         // Should provide a status and suggestion to resolve.
         profileContent = (
             <Grid size={{ xs: 12 }} >
-                <main>
-                    <Card>
-                        <CardContent>
-                            <EmptyState
-                                error
-                                message="Sorry, we don't recognize what you are looking for." />
-                            { (hint) ? (
-                                <>
-                                    { "Hint: " }
-                                    <Link href={'/'+hint} underline="always" color="primary" sx={{ textTransform: "capitalize" }} >
-                                        { "Try "+hint }
-                                    </Link>
-                                </>
-                            ) : null }
-                        </CardContent>
-                    </Card>
-                </main>
+                <Card>
+                    <CardContent>
+                        <EmptyState
+                            error
+                            message="Sorry, we don't recognize what you are looking for." />
+                        { (hint) ? (
+                            <>
+                                { "Hint: " }
+                                <Link href={'/'+hint} underline="always" color="primary" sx={{ textTransform: "capitalize" }} >
+                                    { "Try "+hint }
+                                </Link>
+                            </>
+                        ) : null }
+                    </CardContent>
+                </Card>
             </Grid>
         );
     }
@@ -160,8 +156,8 @@ const Profile : React.FC<ProfileProps> = ({
         { competency: 'Mentoring', value: 60 },
     ];
     const staticTestData3 = [
-        { competency: 'Cybersecurity', value: 80 },
-        { competency: 'Performance', value: 60 },
+        { competency: 'Cybersecurity', value: 70 },
+        { competency: 'Performance', value: 70 },
         { competency: 'Accessibility', value: 80 },
         { competency: 'Privacy/GDPR', value: 50 },
         { competency: 'Internationalization', value: 50 },
@@ -188,59 +184,61 @@ const Profile : React.FC<ProfileProps> = ({
                 linkedin={profileQueryInfo.data?.profile?.linkedin}
             />
 
-            <Container maxWidth={'xl'} sx={{
-                paddingTop: '1.25rem',
-            }} >
-                <Grid container >
-                    {profileContent}
+            <main>
+                <Container maxWidth={'xl'} sx={{
+                    paddingTop: '1.25rem',
+                }} >
+                    <Grid container >
+                        {profileContent}
 
-                    {
-                    ( data1 || data2 || data3 ) ? (
-                    <Grid size={{ xs: 12, xl: 3 }} role="aside" >
-                        <Container disableGutters={true} maxWidth={false} sx={
-                            (theme) => ({
-                                mt: "0.75rem",
-                                mx: 0,
-                                [theme.breakpoints.up('xl')]: {
-                                    mt: 0,
-                                    ml: "0.75rem",
-                                    height: "100%",
-                                    mb: "0.75rem",
-                                    pr: "0.75rem",
-                                },
-                            })
-                        } >
-                            <Card variant='outlined' sx={{ height: "100%" }} >
-                                <CardContent>
-                                    <Grid container>
-                                        <Grid size={{ xs: 12, sm: 12, xl: 12 }}>
-                                            <Typography variant='h5' component='h3' >
-                                                Competencies
-                                            </Typography>
-                                        </Grid>
-                                        <Grid size={{ xs: 12, sm: 6, md: 6, lg: 4, xl: 12 }} sx={{ marginTop: "2.5rem" }} key="competencyChart1" >
-                                            <CompetenciesChart competencies={staticTestData1} color='secondary' />
-                                        </Grid>
-                                        <Grid size={{ xs: 12, sm: 6, md: 6, lg: 4, xl: 12 }} sx={{ marginTop: "2.5rem" }} key="competencyChart2" >
-                                            <CompetenciesChart competencies={staticTestData2} color='secondary' />
-                                        </Grid>
-                                        {
-                                        // Exclude this chart on smaller screens where space is more valuable
-                                        ( aboveLargeSize ) ? (
-                                            <Grid size={{ xs: 12, sm: 6, md: 6, lg: 4, xl: 12 }} sx={{ marginTop: "2.5rem" }} key="competencyChart3" >
-                                                <CompetenciesChart competencies={staticTestData3} color='secondary' />
+                        {
+                        ( data1 || data2 || data3 ) ? (
+                        <Grid size={{ xs: 12, xl: 3 }} >
+                            <Container disableGutters={true} maxWidth={false} sx={
+                                (theme) => ({
+                                    mt: "0.75rem",
+                                    mx: 0,
+                                    [theme.breakpoints.up('xl')]: {
+                                        mt: 0,
+                                        ml: "0.75rem",
+                                        height: "100%",
+                                        mb: "0.75rem",
+                                        pr: "0.75rem",
+                                    },
+                                })
+                            } >
+                                <Card variant='outlined' sx={{ height: "100%" }} >
+                                    <CardContent>
+                                        <Grid container>
+                                            <Grid size={{ xs: 12, sm: 12, xl: 12 }}>
+                                                <Typography variant='h5' component='h3' >
+                                                    Competencies
+                                                </Typography>
                                             </Grid>
-                                        ) : null
-                                        }
-                                    </Grid>
-                                </CardContent>
-                            </Card>
-                        </Container>
+                                            <Grid size={{ xs: 12, sm: 6, md: 6, lg: 4, xl: 12 }} sx={{ marginTop: "2.5rem" }} key="competencyChart1" >
+                                                <CompetenciesChart competencies={staticTestData1} color='secondary' />
+                                            </Grid>
+                                            <Grid size={{ xs: 12, sm: 6, md: 6, lg: 4, xl: 12 }} sx={{ marginTop: "2.5rem" }} key="competencyChart2" >
+                                                <CompetenciesChart competencies={staticTestData2} color='secondary' />
+                                            </Grid>
+                                            {
+                                            // Exclude this chart on smaller screens where space is more valuable
+                                            ( aboveLargeSize ) ? (
+                                                <Grid size={{ xs: 12, sm: 6, md: 6, lg: 4, xl: 12 }} sx={{ marginTop: "2.5rem" }} key="competencyChart3" >
+                                                    <CompetenciesChart competencies={staticTestData3} color='secondary' />
+                                                </Grid>
+                                            ) : null
+                                            }
+                                        </Grid>
+                                    </CardContent>
+                                </Card>
+                            </Container>
+                        </Grid>
+                        ) : null
+                        }
                     </Grid>
-                    ) : null
-                    }
-                </Grid>
-            </Container>
+                </Container>
+            </main>
 
             <Container disableGutters={false} maxWidth='xl' sx={{
                 my: "0.75rem",
