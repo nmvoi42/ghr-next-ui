@@ -29,7 +29,8 @@
     "@mui/material-nextjs": "6.2.1",
     "next": "14.2.15",
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "sass": "1.83.1"
   },
   "devDependencies": {
     "babel-jest": "29.7.0",

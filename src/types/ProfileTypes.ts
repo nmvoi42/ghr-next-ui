@@ -1,4 +1,9 @@
 
+export type Competency = {
+    competency: string;
+    value: number;
+};
+
 export type Skill = {
     skill: string;
     level: number;

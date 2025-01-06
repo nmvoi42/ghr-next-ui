@@ -6,9 +6,11 @@ import {
     Card,
     CardContent,
     Container,
+    Grid2 as Grid,
     Link,
-    Stack,
     Typography,
+    useMediaQuery,
+    useTheme,
 } from '@mui/material';
 
 import { gql, useLazyQuery } from '@apollo/client';
@@ -16,6 +18,7 @@ import { gql, useLazyQuery } from '@apollo/client';
 import ProfileAppBar from '@/components/ProfileAppBar';
 import ProfileContent from '@/components/ProfileContent';
 import EmptyState from '@/components/EmptyState';
+import CompetenciesChart from '@/components/CompetenciesChart';
 
 type ProfileProps = {
     hint?: string;
@@ -67,6 +70,9 @@ const Profile : React.FC<ProfileProps> = ({
     userkey = null,
 }) => {
 
+    const theme = useTheme();
+    const aboveLargeSize = useMediaQuery(theme.breakpoints.up('lg'));
+
     const [ doProfileQuery, profileQueryInfo ] = useLazyQuery(GET_PROFILE_QUERY);
 
     let appBarTitle = '';
@@ -95,36 +101,79 @@ const Profile : React.FC<ProfileProps> = ({
 
         // The user was fetched (or is loading), display the related information
         profileContent = (
-            <ProfileContent
-                loading={profileQueryInfo.loading || !profileQueryInfo.called}
-                error={!!profileQueryInfo.error}
-                name={profileName}
-                tagline={profileQueryInfo.data?.profile?.tagline}
-                skills={profileQueryInfo.data?.profile?.skills}
-                experience={profileQueryInfo.data?.profile?.experience}
-            />
+            <Grid size={{ xs: 12, xl: 9 }} >
+                <ProfileContent
+                    loading={profileQueryInfo.loading || !profileQueryInfo.called}
+                    error={!!profileQueryInfo.error}
+                    name={profileName}
+                    tagline={profileQueryInfo.data?.profile?.tagline}
+                    skills={profileQueryInfo.data?.profile?.skills}
+                    experience={profileQueryInfo.data?.profile?.experience}
+                />
+            </Grid>
         );
     } else {
         // Empty State for profile content if the profile can
         // not be looked up.
         // Should provide a status and suggestion to resolve.
         profileContent = (
-            <Card>
-                <CardContent>
-                    <EmptyState
-                        error
-                        message="Sorry, we don't recognize what you are looking for." />
-                    { (hint) ? (
-                        <>
-                            { "Hint: " }
-                            <Link href={'/'+hint} underline="always" color="primary" sx={{ textTransform: "capitalize" }} >
-                                { "Try "+hint }
-                            </Link>
-                        </>
-                    ) : null }
-                </CardContent>
-            </Card>
+            <Grid size={{ xs: 12 }} >
+                <Card>
+                    <CardContent>
+                        <EmptyState
+                            error
+                            message="Sorry, we don't recognize what you are looking for." />
+                        { (hint) ? (
+                            <>
+                                { "Hint: " }
+                                <Link href={'/'+hint} underline="always" color="primary" sx={{ textTransform: "capitalize" }} >
+                                    { "Try "+hint }
+                                </Link>
+                            </>
+                        ) : null }
+                    </CardContent>
+                </Card>
+            </Grid>
         );
+    }
+
+    // This is temporary data for testing UI layouts prior to connecting the dynamic data
+    const staticTestData1 = [
+        { competency: 'Curiosity', value: 80 },
+        { competency: 'Ownership', value: 70 },
+        { competency: 'Communication', value: 80 },
+        { competency: 'Adaptability', value: 70 },
+        { competency: 'Tenacity', value: 70 },
+        { competency: 'Customer Focus', value: 60 },
+    ];
+    const staticTestData2 = [
+        { competency: 'Feature Development', value: 80 },
+        { competency: 'Test Writing', value: 60 },
+        { competency: 'Customer Support', value: 60 },
+        { competency: 'Documentation', value: 50 },
+        { competency: 'Optimization', value: 60 },
+        { competency: 'Defect Fixing', value: 70 },
+        { competency: 'Mentoring', value: 60 },
+    ];
+    const staticTestData3 = [
+        { competency: 'Cybersecurity', value: 70 },
+        { competency: 'Performance', value: 70 },
+        { competency: 'Accessibility', value: 80 },
+        { competency: 'Privacy/GDPR', value: 50 },
+        { competency: 'Internationalization', value: 50 },
+        { competency: 'Maintainability', value: 80 },
+        { competency: 'Responsive Design', value: 70 },
+    ];
+
+    let data1 = null;
+    let data2 = null;
+    let data3 = null;
+
+    if ( userkey ) {
+        // This will be filled out with real data
+        data1 = staticTestData1;
+        data2 = staticTestData2;
+        data3 = staticTestData3;
     }
 
     return (
@@ -135,15 +184,67 @@ const Profile : React.FC<ProfileProps> = ({
                 linkedin={profileQueryInfo.data?.profile?.linkedin}
             />
 
-            <Container maxWidth={'xl'} sx={{
-                paddingTop: '1.25rem',
-            }} >
-                <Stack spacing="0.75rem" >
-                    <main>
+            <main>
+                <Container maxWidth={'xl'} sx={{
+                    paddingTop: '1.25rem',
+                }} >
+                    <Grid container >
                         {profileContent}
-                    </main>
-                    <ProfileFooter/>
-                </Stack>
+
+                        {
+                        ( data1 || data2 || data3 ) ? (
+                        <Grid size={{ xs: 12, xl: 3 }} >
+                            <Container disableGutters={true} maxWidth={false} sx={
+                                (theme) => ({
+                                    mt: "0.75rem",
+                                    mx: 0,
+                                    [theme.breakpoints.up('xl')]: {
+                                        mt: 0,
+                                        ml: "0.75rem",
+                                        height: "100%",
+                                        mb: "0.75rem",
+                                        pr: "0.75rem",
+                                    },
+                                })
+                            } >
+                                <Card variant='outlined' sx={{ height: "100%" }} >
+                                    <CardContent>
+                                        <Grid container>
+                                            <Grid size={{ xs: 12, sm: 12, xl: 12 }}>
+                                                <Typography variant='h5' component='h3' >
+                                                    Competencies
+                                                </Typography>
+                                            </Grid>
+                                            <Grid size={{ xs: 12, sm: 6, md: 6, lg: 4, xl: 12 }} sx={{ marginTop: "2.5rem" }} key="competencyChart1" >
+                                                <CompetenciesChart competencies={staticTestData1} color='secondary' />
+                                            </Grid>
+                                            <Grid size={{ xs: 12, sm: 6, md: 6, lg: 4, xl: 12 }} sx={{ marginTop: "2.5rem" }} key="competencyChart2" >
+                                                <CompetenciesChart competencies={staticTestData2} color='secondary' />
+                                            </Grid>
+                                            {
+                                            // Exclude this chart on smaller screens where space is more valuable
+                                            ( aboveLargeSize ) ? (
+                                                <Grid size={{ xs: 12, sm: 6, md: 6, lg: 4, xl: 12 }} sx={{ marginTop: "2.5rem" }} key="competencyChart3" >
+                                                    <CompetenciesChart competencies={staticTestData3} color='secondary' />
+                                                </Grid>
+                                            ) : null
+                                            }
+                                        </Grid>
+                                    </CardContent>
+                                </Card>
+                            </Container>
+                        </Grid>
+                        ) : null
+                        }
+                    </Grid>
+                </Container>
+            </main>
+
+            <Container disableGutters={false} maxWidth='xl' sx={{
+                my: "0.75rem",
+                pl: "1rem",
+                pr: "1rem" }} >
+                <ProfileFooter/>
             </Container>
         </Container>
     );

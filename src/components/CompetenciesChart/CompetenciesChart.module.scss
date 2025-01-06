@@ -1,0 +1,16 @@
+
+.competenciesChart {
+    :global {
+        g.y-labels {
+            display: none;
+        }
+
+        g.blobs path.blob.fill-2-1-2 {
+            display: none;
+        }
+
+        g.dots circle.fill-2-1-2 {
+            display: none;
+        }
+    }
+}

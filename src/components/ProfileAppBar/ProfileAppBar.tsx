@@ -94,14 +94,14 @@ const ProfileAppBar: React.FC<ProfileAppBarProps> = ({
                             <Grid size={3} sx={{ display: "flex", justifyContent: "flex-end" }}>
                                 {
                                 ( linkedInUrl ) ? (
-                                    <IconButton size="large" href={ linkedInUrl } target="_blank" >
+                                    <IconButton size="large" href={ linkedInUrl } target="_blank" aria-label="LinkedIn Link" >
                                         <LinkedIn fontSize="large" titleAccess="LinkedIn" color="secondary" />
                                     </IconButton>
                                 ) : null
                                 }
                                 {
                                 ( githubUrl ) ? (
-                                    <IconButton size="large" href={ githubUrl } target="_blank" >
+                                    <IconButton size="large" href={ githubUrl } target="_blank" aria-label="GitHub Link" >
                                         <GitHub fontSize="large" titleAccess="GitHub" color="secondary" />
                                     </IconButton>
                                 ) : null
