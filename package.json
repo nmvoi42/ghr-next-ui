@@ -27,7 +27,7 @@
     "@mui/lab": "6.0.0-beta.20",
     "@mui/material": "6.2.1",
     "@mui/material-nextjs": "6.2.1",
-    "next": "14.2.15",
+    "next": "14.2.21",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "sass": "1.83.1"
@@ -59,14 +59,14 @@
     "@types/react-dom": "^18"
   },
   "overrides": {
-    "next": "14.2.15",
-    "@next/env": "14.2.15",
+    "next": "14.2.21",
+    "@next/env": "14.2.21",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "resolutions": {
-    "next": "14.2.15",
-    "@next/env": "14.2.15",
+    "next": "14.2.21",
+    "@next/env": "14.2.21",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
