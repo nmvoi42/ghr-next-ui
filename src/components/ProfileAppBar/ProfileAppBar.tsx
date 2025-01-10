@@ -95,14 +95,14 @@ const ProfileAppBar: React.FC<ProfileAppBarProps> = ({
                                 {
                                 ( linkedInUrl ) ? (
                                     <IconButton size="large" href={ linkedInUrl } target="_blank" aria-label="LinkedIn Link" >
-                                        <LinkedIn fontSize="large" titleAccess="LinkedIn" color="secondary" />
+                                        <LinkedIn fontSize="large" titleAccess="LinkedIn" sx={ (theme) => ({ color: theme.palette.secondary.light }) } />
                                     </IconButton>
                                 ) : null
                                 }
                                 {
                                 ( githubUrl ) ? (
                                     <IconButton size="large" href={ githubUrl } target="_blank" aria-label="GitHub Link" >
-                                        <GitHub fontSize="large" titleAccess="GitHub" color="secondary" />
+                                        <GitHub fontSize="large" titleAccess="GitHub" sx={ (theme) => ({ color: theme.palette.secondary.light }) } />
                                     </IconButton>
                                 ) : null
                                 }
