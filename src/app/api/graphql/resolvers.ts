@@ -1,6 +1,5 @@
 
-import { client as mongodbClient } from '@/db/mongodb';
-
+import { getProfileByUserKey } from '@/db/mongodb';
 
 type ProfileResolverArgs = {
     userkey: string;
@@ -9,34 +8,25 @@ type ProfileResolverArgs = {
 /**
  * Resolver to return the profile of a person.
  */
-const profileResolver = async (parent: undefined, args: Record<string,ProfileResolverArgs>) => {
+const profileResolver = async (parent: undefined, args: ProfileResolverArgs) => {
     if ( !args.userkey ) {
         throw new Error("No userkey provided");
     }
 
     let profile = null;
-    try {
-        await mongodbClient.connect();
-        const db = mongodbClient.db(process.env.DB_NAME);
-        const collection = db.collection('profiles');
-        const dbProfile = await collection.findOne({userkey: args.userkey});
-        if ( dbProfile ) {
-            profile = {
-                userkey: dbProfile.userkey,
-                name: dbProfile.name ?? '',
-                tagline: dbProfile.tagline ?? '',
-                skills: dbProfile.skills ?? [],
-                experience: dbProfile.experience ?? [],
-                github: dbProfile.github ?? null,
-                linkedin: dbProfile.linkedin ?? null,
-            };
-        }
 
-    } finally {
-        await mongodbClient.close();
-    }
-
-    if ( !profile ) {
+    const dbProfile = await getProfileByUserKey(args.userkey);
+    if ( dbProfile ) {
+        profile = {
+            userkey: dbProfile.userkey,
+            name: dbProfile.name ?? '',
+            tagline: dbProfile.tagline ?? '',
+            skills: dbProfile.skills ?? [],
+            experience: dbProfile.experience ?? [],
+            github: dbProfile.github ?? null,
+            linkedin: dbProfile.linkedin ?? null,
+        };
+    } else {
         throw new Error("Invalid userkey specified");
     }
     return profile;
