@@ -4,6 +4,8 @@ import { headers } from 'next/headers';
 import Profile from '@/components/Profile';
 import ApolloClientContainer from '@/components/ApolloClientContainer';
 
+import { prefetchProfileByUserKey } from '@/db/mongodb';
+
 const VALID_USER_KEYS: string[] = process.env.VALID_USER_TAGS?.split(',') ?? [];
 
 // Statically export some expected routes for improved performance.
@@ -23,7 +25,10 @@ type ProfilePageProps = {
 const ProfilePage: React.FC<ProfilePageProps> = async ({ params }) => {
     const userkey = (await params).userkey;
 
-    const csrfToken = headers().get('X-CSRF-Token') ?? 'invalid';
+    // Start the prefetch so the data will be available on the server side.
+    prefetchProfileByUserKey(userkey);
+
+    const csrfToken = (await headers()).get('X-CSRF-Token') ?? 'invalid';
 
     // Validate the user key to make sure we don't have a bad request.
     // There's really only one valid user key in this demo, so we'll just cut out
